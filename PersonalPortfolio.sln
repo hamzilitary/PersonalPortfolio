@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalPorfolio", "PersonalPorfolio\PersonalPorfolio.csproj", "{EB8D17FC-0A38-4B80-8877-80E44C1D6426}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalPortfolio", "PersonalPorfolio\PersonalPortfolio.csproj", "{EB8D17FC-0A38-4B80-8877-80E44C1D6426}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
