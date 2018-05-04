@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using PersonalPortfolio.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using System.Collections.Generic;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,6 +22,8 @@ namespace PersonalPortfolio.Controllers
             _userManager = userManager;
             _db = db;
         }
+
+       
 
         public async Task<IActionResult> Index()
         {
@@ -43,5 +46,15 @@ namespace PersonalPortfolio.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public IActionResult HelloAjax()
+        {
+            return Content("Hello from the controller!", "text/plain");
+        }
+        public IActionResult Blog()
+        {
+            return View();
+        }
+      
     }
 }

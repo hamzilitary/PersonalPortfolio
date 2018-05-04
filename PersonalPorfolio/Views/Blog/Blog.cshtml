@@ -1,0 +1,31 @@
+﻿@model IEnumerable<PersonalPortfolio.Models.Blog>
+
+@{
+    ViewData["Title"] = "Blog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+ $('.display-view').click(function () {
+  $.ajax({
+    type: 'GET',
+    dataType: 'html',
+    url: '@Url.Action("Index")',
+    success: function (result) {
+      $('#result4').html(result);
+    }
+  });
+});
+  });
+
+</script>
+<body>
+    <h2>Blogs</h2>
+    <h4 class="display-view">See Blogs</h4>
+    <div id="result4"></div>
+</body>
+
+@Html.ActionLink("Create new", "Create")

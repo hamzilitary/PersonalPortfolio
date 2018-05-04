@@ -1,5 +1,27 @@
 ﻿
 @model IEnumerable<PersonalPortfolio.Models.Blog>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Work</h2>
+<ul>
+    <li>Gastroenterolgy Technician</li>
+    <li>Private tutor</li>
+    <li>Construction</li>
+</ul>
+<h2>Education</h2>
+<ul>
+    <li>Epicodus | C#/.NET</li>
+    <li>University of Texas at San Antonio | Biology </li>
+</ul>
+<h2>Github</h2>
+<p>https://github.com/hamzilitary</p>
+<h2>LinkedIn</h2>
+<p>https://www.linkedin.com/in/hamza-naeem-hamzilitary/</p>
+<h2>How I got into Coding</h2>
+<p>I got into coding from a family members advice.</p>
+
 
 <h2>Here is your list of blog post, @User.Identity.Name</h2>
 <hr />
@@ -9,7 +31,8 @@
     <ul>
         @foreach (var listBlog in Model)
         {
-            <li>@Html.DisplayFor(modelBlog => listBlog.Title)</li>
+            <li>@Html.DisplayFor(modeBlog => listBlog.Title)</li>
+            <li>@Html.DisplayFor(modeBlog => listBlog.Body)</li>
         }
     </ul>
 }
@@ -19,3 +42,4 @@ else
 }
 
 @Html.ActionLink("Create new", "Create")
+@Html.ActionLink("Delete", "Delete")
