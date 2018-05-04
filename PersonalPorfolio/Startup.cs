@@ -78,7 +78,7 @@ namespace PersonalPortfolio
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=ApplicationUser}/{action=Index}/{id?}");
+                    template: "{controller=ApplicationUsers}/{action=Index}/{id?}");
             });
 
             app.Run(async (context) =>

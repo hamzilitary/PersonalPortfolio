@@ -1,0 +1,21 @@
+﻿
+@model IEnumerable<PersonalPortfolio.Models.Blog>
+
+<h2>Here is your list of blog post, @User.Identity.Name</h2>
+<hr />
+
+@if (Model.Any())
+{
+    <ul>
+        @foreach (var listBlog in Model)
+        {
+            <li>@Html.DisplayFor(modelBlog => listBlog.Title)</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No blogs have been added yet!</p>
+}
+
+@Html.ActionLink("Create new", "Create")
