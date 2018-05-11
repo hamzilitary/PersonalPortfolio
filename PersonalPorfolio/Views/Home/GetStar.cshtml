@@ -1,0 +1,17 @@
+﻿@model IEnumerable<PersonalPortfolio.Models.Star>
+
+<h2>All Starred</h2>
+<hr />
+<ol>
+    @foreach (var starred in Model)
+    {
+        <li>
+            <ul>
+                <li>Starred: @Html.DisplayFor(modelItem => starred.name)</li>
+              
+            </ul>
+        </li>
+    }
+</ol>
+
+@Html.ActionLink("Back home", "Index")
