@@ -1,0 +1,31 @@
+@model IEnumerable<PersonalPortfolio.Models.Comment>
+
+
+<div>
+    <h4>Comments</h4>
+    <hr />
+    <ul class="dl-horizontal">
+
+        @foreach( var comment in Model) {
+        <li>
+            @comment.ReplyDtm - @comment.CommentText
+            <button class="commentDelete" data-blogID="@comment.AssociatedBlog.BlogKey" data-commentID="@comment.CommentKey">Delete</button>
+        </li>
+        }
+    </ul>
+    
+</div>
+<script>
+    $(function () {
+        $(".commentDelete").click(function (e) {
+            var id = $(this).data('commentid');
+
+            var blogId = $(this).data('blogid');
+            $.post("@Url.Action("DeleteComment")?id=" + id, function (result) {
+                $("#comments_" + id).replaceWith(result);
+            });
+            event.preventDefault();
+
+        });
+    });
+</script>

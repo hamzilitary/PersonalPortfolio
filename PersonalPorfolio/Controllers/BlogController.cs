@@ -6,6 +6,8 @@ using PersonalPortfolio.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using System.Collections.Generic;
+using System;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,13 +25,25 @@ namespace PersonalPortfolio.Controllers
             _db = db;
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DeleteComment(int id)
+        {
+            var associatedComment = _db.Comments.Include(c => c.AssociatedBlog).FirstOrDefault( c => c.CommentKey == id);
+            var blogId = associatedComment.AssociatedBlog.BlogKey;
+            if (associatedComment != null)
+            {
+                _db.Comments.Remove(associatedComment);
+                _db.SaveChanges();                
+            }
+            return PartialView("Comment",_db.Comments.Include(c => c.AssociatedBlog).Where(c => c.AssociatedBlog.BlogKey == blogId).ToList());
+        }
        
 
         public async Task<IActionResult> Index()
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var currentUser = await _userManager.FindByIdAsync(userId);
-            return View(_db.Blogs.Where(x => x.User.Id == currentUser.Id));
+            return View(_db.Blogs.Include(b => b.Comments).Where(x => x.User.Id == currentUser.Id));
         }
         public IActionResult Create()
         {
@@ -46,6 +60,22 @@ namespace PersonalPortfolio.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateComment(Comment comment)
+        {
+            if (!string.IsNullOrWhiteSpace(comment.CommentText) && comment.BlogKey != default(int)) {
+                var blog = _db.Blogs.Find(comment.BlogKey);
+                comment.ReplyDtm = DateTime.Now;
+                comment.AssociatedBlog = blog;
+                _db.Comments.Add(comment);
+
+                await _db.SaveChangesAsync();
+            }
+            return PartialView("Comment",_db.Comments.Where(c => c.AssociatedBlog.BlogKey == comment.BlogKey).ToList());
+        }
+
+        
 
         public IActionResult HelloAjax()
         {

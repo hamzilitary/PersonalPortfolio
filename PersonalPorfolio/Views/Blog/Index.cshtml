@@ -27,19 +27,38 @@
 <hr />
 
 @if (Model.Any())
-{
-    <ul>
-        @foreach (var listBlog in Model)
-        {
-            <li>@Html.DisplayFor(modeBlog => listBlog.Title)</li>
-            <li>@Html.DisplayFor(modeBlog => listBlog.Body)</li>
-        }
-    </ul>
+{<div>
+    @foreach (var listBlog in Model)
+    {
+        <h3>@Html.DisplayFor(modeBlog => listBlog.Title)</h3>
+        <div>@Html.DisplayFor(modeBlog => listBlog.Body)</div>
+        <div>
+            <h2>Add Comment</h2>
+            <form>
+                <input name="BlogKey" type="hidden" value="@listBlog.BlogKey" />
+                <textarea name="CommentText" placeholder="Enter comment here"></textarea>
+                <button class="commentSubmit" type="submit">Submit</button>
+            </form>
+        </div>
+        <div id="comments_@listBlog.BlogKey">@Html.Partial("Comment", listBlog.Comments)</div>
+    }
+</div>
 }
 else
 {
     <p>No blogs have been added yet!</p>
 }
-
+<script>
+    $(function () {
+        $(".commentSubmit").click(function (e) {
+            var form = $(this).closest('form').serialize();
+            $.post("@Url.Action("CreateComment")", form, function (result) {
+                $("#comments_" + form.BlogKey).replaceWith(result);
+            });
+            event.preventDefault();
+        });
+       
+    });
+</script>
 @Html.ActionLink("Create new", "Create")
 @Html.ActionLink("Delete", "Delete")
